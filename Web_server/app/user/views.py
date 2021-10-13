@@ -4,8 +4,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password #비밀번호 암호화 / 패스워드 체크(db에있는거와 일치성확인)
 from django.views import View
 from .models import User
+from validate_email import validate_email
 
 import json
+
+
+class EmailValidationView(View):
+    def post(self, request):
+        data=json.loads(request.body) # 데이터를 먼저 불러옴
+        email = data['email']
+        if not validate_email(email):
+            return JsonResponse({'email_error':'Email is invalid'}, status=400) #// 400 Bad request
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'email_error':'Sorry email in use, choose another one.'}, status=409) # resource is confliting with the one already have
+        return JsonResponse({'email_valid': True})
 
 class UsernameValidationView(View):
     def post(self, request):
@@ -17,30 +29,30 @@ class UsernameValidationView(View):
             return JsonResponse({'username_error':'Sorry username in use, choose another one.'}, status=409) # resource is confliting with the one already have
         return JsonResponse({'username_valid': True})
 
-
-
-
-
-# Create your views here.
-def register(request):   #회원가입 페이지를 보여주기 위한 함수
+def register(request):
     if request.method == "GET":
         return render(request, 'register.html')
 
     elif request.method == "POST":
-        username = request.POST.get('username',None)   #딕셔너리형태
-        password = request.POST.get('password',None)
-        re_password = request.POST.get('re_password',None)
-        res_data = {} 
-        if not (username and password and re_password) :
-            res_data['error'] = "모든 값을 입력해야 합니다."
-        if password != re_password :
-            # return HttpResponse('비밀번호가 다릅니다.')
-            res_data['error'] = '비밀번호가 다릅니다.'
-        else :
-            user = User(username=username, password=make_password(password))
-            user.save()
-        # return render(request, 'index.html', res_data) #register를 요청받으면 register.html 로 응답.
-        return redirect('/user/login')
+        # GET USER DATA 
+        # VALIDATE 
+        # create a user account
+
+        username = request.POST.get('username',None)
+        email = request.POST.get('email', None)
+        password = request.POST.get('password')
+        re_password = request.POST.get('re_password')
+
+        if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
+
+                user = User(username=username, email=email, password=make_password(password))
+                user.save()
+                
+                return redirect('/user/login')
+
+        return render(request, 'register.html')
+
 
 def login(request):
     
@@ -49,14 +61,14 @@ def login(request):
         return render(request, 'login.html')
 
     elif request.method == "POST":
-        login_username = request.POST.get('username', None)
+        login_username = request.POST.get('email', None)
         login_password = request.POST.get('password', None)
 
         response_data = {}
         if not (login_username and login_password):
-            response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
+            response_data['error']="이메일과 비밀번호를 모두 입력해주세요."
         else : 
-            myuser = User.objects.get(username=login_username) 
+            myuser = User.objects.get(email=login_username) 
             #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
             if check_password(login_password, myuser.password):
                 request.session['user'] = myuser.id 
@@ -81,4 +93,3 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
     return redirect('/')
-

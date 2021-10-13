@@ -29,11 +29,9 @@
                 <div class="card-body">
                     <div class="card-title py-3">
                         <h3>Registration for a free account</h3>
-                        <h8>We have made incredible AI that match your REAL-TIME movements. Come see what DANCERFLOW is all about.</h8>
                     </div>
                     <div class="container">
                         <div class="row mt-3">
-                            {{error}}
                             <div class="col-12 ">
                                 <div class="row mt-3">
                                     <div class="col-12 ">
@@ -43,8 +41,18 @@
                                                 <input type="text" class="form-control" id="username" placeholder="username"
                                                     name="username" check_result = "fail" required />
                                                 <!-- 이 name 값으로 정보가 전달된다 -->
-                                                <div class="invalid_feedback" style="display:none"></div>
                                             </div>
+                                            <div class="invalid-feedback" style="display:none">
+                                            
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                                            </div>
+                                            <div class="emailFeedBackArea invalid-feedback" style= "display:none">
+                                                
+                                            </div>
+
 
                                             <div class="form-group">
                                                 <input type="password" class="form-control" id="password" placeholder="Password"
@@ -55,7 +63,7 @@
                                                 <input type="password" class="form-control" id="re_password" placeholder="Confirm password"
                                                     name="re_password">
                                             </div>
-                                            <button type="submit" value = "Register"class="btn btn-block btn-primary">Register</button>
+                                            <button type="submit" value = "Register"class="btn btn-block btn-primary submit-btn">Register</button>
                                         </form>
                                     </div>
                                 </div>
