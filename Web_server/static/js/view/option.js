@@ -4,7 +4,7 @@
 */
 Vue.component('df-option-mode',{
     template:`
-    <section class="pricing-card-area section-padding30 section-bg" data-background="assets/img/gallery/section_bg1.png">
+    <section class="pricing-card-area section-bg" data-background="assets/img/gallery/section_bg1.png">
         <div class="container">
                 <!-- Section Tittle -->
                 <div class="row d-flex justify-content-center">
@@ -36,11 +36,9 @@ Vue.component('df-option-mode',{
                                     <strong><h6>Upload A Video</h6></strong>
                                 </div>
                                 </br>
-                                <strong>Lorem ipsum dolor sit amet,</strong></br>
-                                <strong>consectetur</strong>
                                 </ul>
                             </div>
-                            <div class="card-buttons mt-30">
+                            <div class="card-buttons mt-30 select-btn-line">
                                 <a  class="btn card-btn1 select-btn"  >Select</a>
                             </div>
                         </div>
@@ -66,11 +64,9 @@ Vue.component('df-option-mode',{
                                         <strong>　</strong>
                                     </div>
                                 </br>
-                                <strong>Lorem ipsum dolor sit amet,</strong></br>
-                                <strong>consectetur</strong>
                                 </ul>
                             </div>
-                            <div class="card-buttons mt-30">
+                            <div class="card-buttons mt-30 select-btn-line">
                                 <a  class="btn card-btn1 select-btn">Select</a>
                             </div>
                         </div>
@@ -86,7 +82,8 @@ Vue.component('df-option-mode',{
 
 
 let app_option_mode = new Vue({
-    el: "#app-option-mode"
+    el: "#app-option-mode",
+    delimiters : ['[[', ']]'],
 });
 
 
@@ -95,7 +92,7 @@ let app_option_mode = new Vue({
 */
 Vue.component('df-option-upload', {
     template:`
-    <section class="pricing-card-area section-padding30 section-bg" data-background="assets/img/gallery/section_bg1.png">
+    <section class="pricing-card-area section-bg" data-background="assets/img/gallery/section_bg1.png">
         <div class="container">
                 <!-- Section Tittle -->
                 <div class="row d-flex justify-content-center">
@@ -119,12 +116,11 @@ Vue.component('df-option-upload', {
                             
                             </div>
                             </br>
-                            <strong>Lorem ipsum dolor sit amet,</strong></br>
-                                <strong>consectetur</strong>
+
                             
                             </ul>
                         </div>
-                        <div class="card-buttons mt-30" style="padding-bottom: 25px;">
+                        <div class="card-buttons mt-30 select-btn-line" style="padding-bottom: 25px;">
                             <a  class="btn card-btn1 select-btn">Select</a>
                         </div>
                     </div>
@@ -144,13 +140,12 @@ Vue.component('df-option-upload', {
                                     <strong><h6>Drag & Drop</h6></strong></br></br>
                                     <li><button style = "background-color: #211A4D ">Choose a File</button></li>
                                     </br>
-                                    <strong>Lorem ipsum dolor sit amet,</strong></br>
-                                    <strong>consectetur</strong>
+
                                 </div>
                             </ul>
                         </div>
                     </br></br></br>
-                        <div class="card-buttons mt-30" >
+                        <div class="card-buttons mt-30 select-btn-line" >
                             <a  class="btn card-btn1 select-btn">Select</a>
                         </div>
                     </div>
@@ -162,7 +157,8 @@ Vue.component('df-option-upload', {
 });
 
 let app_option_upload = new Vue({
-    el: '#app-option-upload'
+    el: '#app-option-upload',
+    delimiters : ['[[', ']]'],
 })
 
 
@@ -172,7 +168,7 @@ let app_option_upload = new Vue({
 
 Vue.component('df-option-display', {
     template:`
-    <section class="pricing-card-area section-padding30 section-bg" data-background="assets/img/gallery/section_bg1.png">
+    <section class="pricing-card-area section-bg" data-background="assets/img/gallery/section_bg1.png">
         <div class="container">
                 <!-- Section Tittle -->
                 <div class="row d-flex justify-content-center">
@@ -201,12 +197,11 @@ Vue.component('df-option-display', {
                                 <button style="background-color: white; width: 161px;height: 103px; color: black;">2</button>
                                  </div>
                             </br>
-                            <strong>Lorem ipsum dolor sit amet,</strong></br>
-                            <strong>consectetur</strong>
+
                             <li>　</li>
                             </ul>
                         </div>
-                        <div class="card-buttons mt-30">
+                        <div class="card-buttons mt-30 select-btn-line">
                             <a  class="btn card-btn1 select-btn"  >Select</a>
                         </div>
                     </div>
@@ -226,12 +221,11 @@ Vue.component('df-option-display', {
                                 <button style="background-color: white;height: 52px; color: black;">2</button>
                             </div>
                             </br>
-                            <strong>Lorem ipsum dolor sit amet,</strong></br>
-                            <strong>consectetur</strong>
+
                             <li>　</li>
                             </ul>
                         </div>
-                        <div class="card-buttons mt-30">
+                        <div class="card-buttons mt-30 select-btn-line">
                             <a  class="btn card-btn1 select-btn"  >Select</a>
                         </div>
                     </div>
@@ -250,12 +244,11 @@ Vue.component('df-option-display', {
                                 <button style="background-color: #211A4D;height: 106px;">1</button>
                             </div>
                             </br>
-                            <strong>Lorem ipsum dolor sit amet,</strong></br>
-                            <strong>consectetur</strong>
+
                             <li>　</li>
                             </ul>
                         </div>
-                        <div class="card-buttons mt-30">
+                        <div class="card-buttons mt-30 select-btn-line">
                             <a  class="btn card-btn1 select-btn"  >Select</a>
                         </div>
                        
@@ -268,7 +261,8 @@ Vue.component('df-option-display', {
 
 
 let app_option_display = new Vue({
-    el : '#app-option-display'
+    el : '#app-option-display',
+    delimiters : ['[[', ']]'],
 })
 
 Vue.component('df-option-song',{
@@ -311,7 +305,7 @@ Vue.component('df-option-song',{
                         <div class="icon"></div>
                         <i class="fal fa-badge-dollar"></i>
                         <div class="name">
-                            <div class="song-title">Dynamite</div>
+                            <div class="song-title">Permission to Dance</div>
                             <div class="artist">BTS</div>
                         </div>
                     </div>
@@ -501,5 +495,6 @@ Vue.component('df-option-song',{
 
 
 let app_option_song = new Vue({
-    el : '#app-option-song'
+    el : '#app-option-song',
+    delimiters : ['[[', ']]'],
 })

@@ -56,6 +56,9 @@ function switch_card(item){
 cards.forEach(item =>
     item.addEventListener('click', e => {
         switch_card(item);
+        if (Array.from(select_btn).includes(e.target)){
+            next_btn.click()
+        }
 }));
 cards.forEach(item => 
     item.addEventListener('dblclick', e => {
@@ -85,16 +88,15 @@ upload_card.addEventListener('drop', e=>{
 })
 
 song_cards.forEach(item=>item.addEventListener('click', e=>{
-    let title = e.currentTarget.getElementsByClassName('song-title')[0].innerText
-    let artist = e.currentTarget.getElementsByClassName('artist')[0].innerText
-    
+    const SONG_ID = e.currentTarget.getElementsByClassName('song_item')[0].getAttribute('data-id')   
     if(e.currentTarget.getElementsByClassName('checkbox')[0].checked){
         e.currentTarget.classList.add(ITEM_FOCUSED_CLASSNAME)
-        options.songs.push(`${title}-${artist}`)
+        options.songs.push(SONG_ID)
     }else{
         e.currentTarget.classList.remove(ITEM_FOCUSED_CLASSNAME)
-        options.songs = options.songs.filter(song=>song !== `${title}-${artist}`)
+        options.songs = options.songs.filter(song=>song !== SONG_ID)
     }
+    console.log(options.songs)
 }))
 
 /*
@@ -106,6 +108,9 @@ function switch_option (target_option) {
     target_option.classList.add('content-visible')
 }
 
+select_btn.forEach(btn=>btn.addEventListener('click', e=>{
+    // console.log('selected')
+}))
 prev_btn.addEventListener('click',e=>{
     switch(visible_target_option){
         case OPTION_SELECTOR.MODE:  
@@ -195,7 +200,8 @@ start_btn.addEventListener('click', async e=>{
     data.append('display', option_list[2].getAttribute('data-value'))
     data.append('songs', JSON.stringify(options.songs))
     console.log(data)
-    let res = await sendServer('http://220.123.224.95:9000/play/option/', data)
+    let res = await sendServer('http://127.0.0.1:8000/play/option/', data)
+    // let res = await sendServer('http://URL/play/option/', data)
     console.log(res)
     if(res.redirected){
         window.location.assign(res.url)

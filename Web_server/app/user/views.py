@@ -1,46 +1,94 @@
+from django.views.generic import TemplateView
+from django.views import View
+from django.template import context, loader
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
+
+from user.firebase_model import User
+
+from validate_email import validate_email
 from django.contrib.auth.hashers import make_password, check_password #비밀번호 암호화 / 패스워드 체크(db에있는거와 일치성확인)
-from django.views import View
-from .models import User
 
 import json
+from server.settings import DB
+
+# Create your views here.
+
+
+
+class UserView(TemplateView):
+
+
+    def get(self, req, user_id=''):
+        
+        print(req.session.get('user'))
+        if req.session.get('user'):
+            user_id = req.session.get('user')
+        print(user_id)
+
+        result = User.isExistsID(user_id)
+        if result:
+            user = result.to_dict()
+            print(user)
+            play_list = []
+            play_doc = DB.collection('Play').stream()
+            for play in play_doc:
+                data = play.to_dict()
+                if data['user'].id == user_id:
+                    play_list.append({**data, 'pid' : play.id })
+            print(play_list)
+            context = {
+                'user': user,
+                'play_list' : play_list
+            }
+
+            return render(req, 'user_page.html', context)
+        else:
+            render('error')
+
+class EmailValidationView(View):
+    def post(self, request):
+        data=json.loads(request.body) # 데이터를 먼저 불러옴
+        email = data['email']
+        print(data)
+        if not validate_email(email):
+            return JsonResponse({'email_error':'Email is invalid'}, status=400) #// 400 Bad request
+        if User.isExistsEmail(email) :
+            return JsonResponse({'email_error':'Sorry email in use, choose another one.'}, status=409) # resource is confliting with the one already have
+        return JsonResponse({'email_valid': True})
+
 
 class UsernameValidationView(View):
     def post(self, request):
         data=json.loads(request.body) # 데이터를 먼저 불러옴
         username = data['username']
+        print(data)
         if not str(username).isalnum():
             return JsonResponse({'username_error':'username should only contain alphanumeric number'}, status=400) #// 400 Bad request
-        if User.objects.filter(username=username).exists():
+        if User.isExistsUserName(username)       :
             return JsonResponse({'username_error':'Sorry username in use, choose another one.'}, status=409) # resource is confliting with the one already have
         return JsonResponse({'username_valid': True})
 
 
 
-
-
-# Create your views here.
-def register(request):   #회원가입 페이지를 보여주기 위한 함수
+def register(request):
     if request.method == "GET":
         return render(request, 'register.html')
 
     elif request.method == "POST":
-        username = request.POST.get('username',None)   #딕셔너리형태
-        password = request.POST.get('password',None)
-        re_password = request.POST.get('re_password',None)
-        res_data = {} 
-        if not (username and password and re_password) :
-            res_data['error'] = "모든 값을 입력해야 합니다."
+
+        username = request.POST.get('username',None)
+        email = request.POST.get('email', None)
+        password = request.POST.get('password')
+        re_password = request.POST.get('re_password')
+
         if password != re_password :
-            # return HttpResponse('비밀번호가 다릅니다.')
-            res_data['error'] = '비밀번호가 다릅니다.'
-        else :
-            user = User(username=username, password=make_password(password))
-            user.save()
-        # return render(request, 'index.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'register.html')
+
+        User(username=username, email=email, password=make_password(password)).register()
         return redirect('/user/login')
+
 
 def login(request):
     
@@ -49,36 +97,31 @@ def login(request):
         return render(request, 'login.html')
 
     elif request.method == "POST":
-        login_username = request.POST.get('username', None)
+        login_email = request.POST.get('email', None)
         login_password = request.POST.get('password', None)
 
         response_data = {}
-        if not (login_username and login_password):
-            response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
+        if not (login_email and login_password):
+            response_data['error']="이메일과 비밀번호를 모두 입력해주세요."
         else : 
-            myuser = User.objects.get(username=login_username) 
-            #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
-            if check_password(login_password, myuser.password):
-                request.session['user'] = myuser.id 
-                #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
-                #세션 user라는 key에 방금 로그인한 id를 저장한것.
-                return redirect('/')
+            result = User.isExistsEmail(login_email)    
+
+            if result:
+                user = result.to_dict()
+                if check_password(login_password, user['password']):
+                    request.session['user'] = result.id
+                    return redirect('/')
+                else:
+                    response_data['error'] = "비밀번호를 틀렸습니다."
             else:
-                response_data['error'] = "비밀번호를 틀렸습니다."
+                response_data['error'] = '존재하지 않는 이름입니다.'
 
         return render(request, 'login.html',response_data)
 
-def home(request):
-    user_id = request.session.get('user')
-    if user_id :
-        myuser_info = User.objects.get(pk=user_id)  #pk : primary key
-        return HttpResponse(myuser_info.username)   # 로그인을 했다면, username 출력
-
-    return HttpResponse('로그인을 해주세요.') #session에 user가 없다면, (로그인을 안했다면)
-    
     
 def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
     return redirect('/')
+
 

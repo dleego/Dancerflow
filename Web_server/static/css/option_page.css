@@ -19,6 +19,9 @@ font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     justify-content: center;
 }
 
+.pricing-card-area{
+  padding-top:5rem;
+}
 
 /* item */
 /* 버튼 색깔 */
@@ -57,6 +60,14 @@ font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 .prev-next-btn-line{
     margin-bottom : 10rem;
 }
+.select-btn-line{
+  visibility:visible !important; 
+  opacity:1 !important;
+  margin-bottom: 3rem;
+}
+.select-btn{
+}
+
 /*
   Option Card Styles
 */

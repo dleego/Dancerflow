@@ -1,5 +1,6 @@
 
 
+
 /**********************/
 /*     Navigation     */
 /**********************/
@@ -21,8 +22,8 @@
     padding: 0px 20px;
 }
 .navbar .logo-image img {
-    width: 50px;
-    height: 50px;
+    width: 200px;
+    height: 49px;
 }
 .navbar .logo-image span {
     margin-left : 10px; 
@@ -56,7 +57,9 @@
     transition: transform .3s ease-in-out, visibility .3s ease-in-out;
     transition: transform .3s ease-in-out, visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
 }
-
+.offcanvas-collapse:hover{
+    visibility: visible;
+}
 .offcanvas-collapse.open {
     visibility: visible;
     -webkit-transform: translateX(-100%);
@@ -203,7 +206,6 @@
 
     /* Navigation */
     .navbar {
-        padding-top: 1.75rem;
         background :rgba(0, 0, 0,0);
         box-shadow:none;
         transition: all 0.2s;
@@ -276,7 +278,6 @@
     /* end of general styles */
     
     .navbar{
-        padding-top: 1.75rem;
         background :rgba(0, 0, 0,0);
         box-shadow:none;
     }
@@ -335,3 +336,12 @@
     text-decoration: none;
 }
 
+
+
+.hide{
+    visibility: hidden;
+}
+.hide:hover{
+    visibility: visible !important;
+    background: rgba(30, 30, 30, 0.3) !important;
+}

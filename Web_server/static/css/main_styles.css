@@ -12,9 +12,9 @@ Table Of Contents:
 - Project 3
 - Process
 - Services
-- About 
+- About us 
 - Testimonials
-- Team
+- About us
 - Contact
 - Footer
 - Copyright
@@ -340,7 +340,7 @@ a:hover {
 .header {
 	padding-top: 8rem;
 	padding-bottom: 8rem;
-	background: url('https://source.unsplash.com/user/erondu/weekly') center center no-repeat;
+	background: url('/static/images/index_img.png') center center no-repeat;
 	background-size: cover;
 	text-align: center;
 	height:30rem;
@@ -368,6 +368,10 @@ a:hover {
 	color: #444444;
 }
 
+.header .button-container {
+	display: flex;
+	justify-content: center;
+}
 
 /************************/
 /*     Introduction     */
@@ -558,7 +562,7 @@ a:hover {
 .basic-5 .step {
 	display: block;
 	margin-bottom: 1.5rem;
-	padding: 1.75rem 3.25rem;
+	padding: 28px 52px 28px 30px;
 	border: 1px solid #ffffff;
 	border-radius: 4px;
 	color: #ffffff;
@@ -627,7 +631,7 @@ a:hover {
 
 
 /*****************/
-/*     About     */
+/*     About us     */
 /*****************/
 .counter {
 	padding-top: 9.5rem;
@@ -757,7 +761,7 @@ a:hover {
 
 
 /****************/
-/*     Team     */
+/*     About us     */
 /****************/
 .cards-2 {
 	padding-top: 9.5rem;
@@ -1105,7 +1109,7 @@ a:hover {
 	/* end of process */
 
 
-	/* About */
+	/* About us */
 	.counter .counter-cell {
 		display: inline-block;
 		width: 210px;
@@ -1167,7 +1171,7 @@ a:hover {
 	}
 	
 	.header{
-		height:42rem;
+		height:98%;
 	}
 	/* General Styles */
 	.h2-heading {
@@ -1198,8 +1202,7 @@ a:hover {
 	}
 
 	.header .button-container {
-		margin-top: 3rem;
-		margin-left: 5rem;
+		margin-top: 7rem;
 	}
 	/* end of header */
 
@@ -1366,8 +1369,7 @@ a:hover {
 	}
 
 	.header .button-container {
-		margin-top: 3rem;
-		margin-left: 5rem;
+		margin-top: 8rem;
 	}
 
 	.header .btn-solid-lg,
@@ -1436,7 +1438,7 @@ a:hover {
 	/* end of services */
 
 
-	/* About */
+	/* About us */
 	.counter {
 		padding-bottom: 6rem;
 	}
@@ -1465,7 +1467,7 @@ a:hover {
 	/* end of testimonials */
 
 
-	/* Team */
+	/* About us */
 	.cards-2 .card {
 		display: inline-block;
 		width: 256px;
@@ -1484,7 +1486,7 @@ a:hover {
 		margin-left: 0.75rem;
 		margin-right: 1.5rem;
 	}
-	/* end of team */
+	/* end of aboutus */
 
 
 	/* Contact */
